@@ -1,0 +1,268 @@
+{% include "./public/_header.html"   with {title:'项目库',currentPage:3}%}
+  <!-- 公用头部end -->
+  <div class="index-main-wrap">
+    <div class="loc-link-wrap"><a href="">产业动态</a>&gt;<a href="">项目库</a></div>
+    <div class="xiangmu-wrap">
+      <h1 class="xiangmu-title">七省文化库</h1>
+      <div class="clearfix">
+        <div class="xm-left lf">
+          {% for key,item in news_list %}
+          {% if key === '1' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>四川省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '2' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>云南省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '3' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>贵州省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '4' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>青海省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+             {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '5' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>西藏自治区省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '6' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>陕西省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% elseif key === '7' %}
+          <div class="xm-line">
+            <div class="xm-title"><p>甘肃省项目</p><a href="/project-more?role_id={{key}}">更多</a></div>
+            <table class="xm-table">
+              <tr>
+                <th>城市</th>
+                <th>区</th>
+                <th>项目名称</th>
+                <th>投资总额</th>
+                <th>所属行业</th>
+                <th>发布时间</th>
+              </tr>
+              {% for child in item %}
+              <tr>
+                <td>{{child.project_implementation_city}}</td>
+                <td>{{child.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{child.project_id}}" title="{{child.project_title}}">{{child.project_title}}</a></td>
+                <td>{{child.project_funds_all}}</td>
+                <td>{{child.project_industry_name}}</td>
+                <td>{{child.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <div class="xm-right rt">
+          <div class="xm-rt-tit">项目分类</div>
+          <div class="xm-fenlei-wrap">
+            <h2>行业<a href="" class="project-more rt"></a></h2>
+            <div class="hangye-wrap">
+              <a href="javascript:;" class="on">全部<input type="hidden" name="" value=""></a>
+              {% for  key,item in  industry %}
+              <a href="javascript:;">{{item}}<input type="hidden" name="" value="{{key}}"></a>
+              {% endfor %}
+            </div>
+            <h2>地区<a href="" class="project-more rt"></a></h2>
+            <div class="hangye-wrap1">
+              <a href="javascript:;" class="on">全部<input type="hidden" name="" value=""></a>
+              <a href="javascript:;">四川<input type="hidden" name="" value="1"></a>
+              <a href="javascript:;">云南<input type="hidden" name="" value="2"></a>
+              <a href="javascript:;">贵州<input type="hidden" name="" value="3"></a>
+              <a href="javascript:;">青海<input type="hidden" name="" value="4"></a>
+              <a href="javascript:;">西藏<input type="hidden" name="" value="5"></a>
+              <a href="javascript:;6">陕西<input type="hidden" name="" value="6"></a>
+              <a href="javascript:;7">甘肃<input type="hidden" name="" value="7"></a>
+            </div>
+          </div>
+          <div class="xm-rt-tit">最受关注项目分类</div>
+          <div class="popular-most-wrap">
+            <ul>
+              {% for  item in  hot_project %}
+              <li><a href="/project-detail?project_id={{item.project_id}}" title="{{item.project_title}}">{{item.project_title}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="xm-rt-tit">最新发布项目</div>
+          <div class="popular-most-wrap">
+            <ul>
+              {% for  item in  new_project %}
+              <li><a href="/project-detail?project_id={{item.project_id}}" title="{{item.project_title}}">{{item.project_title}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include "./public/_footer.html" %}
+
+<script type="text/javascript">
+  var markIndex2 =  '{{index2}}';
+  var markIndex1 =  '{{index1}}';
+  console.log(markIndex1,markIndex2)
+  if (markIndex1) {
+    $('.hangye-wrap a').each(function(key,item){
+      if (key == markIndex1) {
+        $(this).addClass('on').siblings().removeClass('on');
+      }
+    })
+  }
+  if (markIndex2) {
+    $('.hangye-wrap1 a').each(function(key,item){
+      if (key == markIndex2) {
+        $(this).addClass('on').siblings().removeClass('on');
+      }
+    })
+  }
+    $('.hangye-wrap a').click(function(){
+      var fenId = $(this).find('input').val();
+      var index1 = $(this).index();
+      var areaId = '';
+      $('.hangye-wrap1 a').each(function(key,item){
+        if (key == markIndex2) {
+          areaId = $(this).find('input').val();
+        }
+      })
+      window.location.href ='/project-library?index2='+markIndex2+'&index1='+index1+'&project_industry='+fenId+'&role_id='+areaId;
+    });
+    $('.hangye-wrap1 a').click(function(){
+      var areaId = $(this).find('input').val();
+      var index2 = $(this).index();
+      var fenId = '';
+      $('.hangye-wrap1 a').each(function(key,item){
+        if (key == markIndex1) {
+          fenId = $(this).find('input').val();
+        }
+      })
+      window.location.href ='/project-library?index1='+markIndex1+'&index2='+index2+'&project_industry='+fenId+'&role_id='+areaId;
+    });
+  // }
+
+</script>

@@ -1,0 +1,131 @@
+{% include "./public/_header.html" with {title:'申报服务',currentPage:6}%}
+<!-- <title>关于我们</title> -->
+  <!-- 公用头部end -->
+  <div class="index-main-wrap">
+    <div class="loc-link-wrap"><a href="">项目申报</a>&gt;<a href="">申报服务</a></div>
+    <div class="apply-service-wrap">
+      <form class="layui-form" action="javascript:;">
+        <div class="layui-form-item">
+          <label class="layui-form-label">项目名称：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required|title" required placeholder="请输入项目名称" autocomplete="off" class="layui-input project_title">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">所属省份</label>
+          <div class="layui-input-inline" style="width: 245px;">
+            <select name="interest" lay-filter="area" lay-search lay-verify="required|title">
+              <option value="1">四川</option>
+              <option value="2">云南 </option>
+              <option value="3">贵州</option>
+              <option value="4">青海</option>
+              <option value="5">西藏</option>
+              <option value="6">甘肃 </option>
+              <option value="7">山西</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">项目类型：</label>
+          <div class="layui-input-inline" style="width: 245px;">
+            <select name="interest" lay-filter="type" lay-search lay-verify="required|title" class="project-type">
+              <option value="1">教育培训</option>
+              <option value="2">文化旅游</option>
+              <option value="3">娱乐演艺</option>
+              <option value="4">动漫游戏</option>
+              <option value="5">影视影音</option>
+              <option value="6">传媒出版</option>
+              <option value="7">工艺美术</option>
+              <option value="8">文化设施</option>
+              <option value="9">网络文化</option>
+              <option value="10">文化用品</option>
+              <option value="9">创意设计</option>
+              <option value="10">其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">拟申报资金名称：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required|title" required placeholder="请输入拟申报资金名称" autocomplete="off" class="layui-input project_funds_name">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">联系人：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required|title" required placeholder="请输入联系人名字" autocomplete="off" class="layui-input link_name">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">联系方式：</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required|phonenumber" required placeholder="请输入手机号" autocomplete="off" class="layui-input link_tel">
+          </div>
+        </div>
+        <div class="service-submit"><button type="submit" lay-submit  lay-filter="*">提交</button></div>
+      </form>
+    </div>
+  </div>
+ {% include "./public/_footer.html" %}
+  <script>
+    ajaxRequest('/attr','GET',{'attr_group_id':1},callbackType);
+    var obj = {role_id:1,project_industry :1}
+    layui.use('form', function(){
+      var form = layui.form;
+      //验证手机号码
+      form.verify({
+        phonenumber: function(value){
+          if(isNaN(value)){
+            return '请输入数字';
+          } else if(!(/^1[34578]\d{9}$/.test(value))){
+            return '请输入正确的手机号码';
+          }
+        }
+        ,required: function(value){
+          if(value == ''){
+            return '必填项不能为空';
+          }
+        }
+      });
+
+      form.on('select(area)', function(data){
+        obj.role_id = parseInt(data.value);
+        return false;
+      });
+      form.on('select(type)', function(data){
+        obj.project_industry = parseInt(data.value);
+        return false;
+      });
+      //监听提交
+      form.on('submit(*)', function(data){
+        obj.project_title = $('.project_title').val();
+        obj.project_funds_name = $('.project_funds_name').val();
+        obj.link_name = $('.link_name').val();
+        obj.link_tel = $('.link_tel').val();
+        ajaxRequest('/serviceProjectAdd','POST',obj,callback);
+        return false;
+      });
+    });
+
+    //项目申报成功
+    function callback (json) {
+      layer.msg(json);
+    }
+    //项目类型的获取
+    function callbackType (json) {
+      var _html = ''
+      for (var item in  json) {
+        _html += '<option value="'+item+'">'+json[item]+'</option>'
+      }
+      $('project-type').html(_html);
+    }
+
+    function ajaxRequest(url,type,data,callback){
+        $.ajax({
+            url:url,
+            type: type,
+            data:data,
+            success:callback
+        });
+      }
+  </script>

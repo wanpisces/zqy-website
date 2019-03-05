@@ -1,0 +1,53 @@
+{% include "./public/_header.html"   with {title:'项目库',currentPage:3}%}
+  <!-- 公用头部end -->
+  <div class="index-main-wrap">
+    <div class="xiangmu-wrap">
+      <h1 class="xiangmu-title">
+        {% if role_id == 0 %}
+        平台项目
+        {% elseif role_id == 1 %}
+        四川省项目
+        {% elseif role_id == 2 %}
+        云南省项目
+        {% elseif role_id == 3 %}
+        贵州省项目
+        {% elseif role_id == 4 %}
+        青海省项目
+        {% elseif role_id == 5 %}
+        西藏省项目
+        {% elseif role_id == 6 %}
+        甘肃省项目
+        {% elseif role_id == 7 %}
+        山西省项目
+        {% endif %}
+    </h1>
+      <div class="clearfix">
+        <div class="xm-left" style="margin: auto;width: 100%;">
+          <div class="xm-line">
+            <table class="xm-table">
+              <tr>
+                <th style="width: 100px;">城市</th>
+                <th style="width: 100px;">区</th>
+                <th style="width: 300px;">项目名称</th>
+                <th style="width: 100px;">投资总额</th>
+                <th style="width: 100px;">所属行业</th>
+                <th style="width: 100px;">发布时间</th>
+              </tr>
+              {% for item in  list %}
+              <tr>
+                <td>{{item.project_implementation_city}}</td>
+                <td>{{item.project_implementation_area}}</td>
+                <td><a href="/project-detail?project_id={{item.project_id}}" title="中国（绵竹）木板年画产业发展基地">{{item.project_title}}</a></td>
+                <td>{{item.project_funds_all}}</td>
+                <td>{{item.project_industry_name}}</td>
+                <td>{{item.project_time}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include "./public/_footer.html" %}

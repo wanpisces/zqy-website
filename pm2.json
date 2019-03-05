@@ -1,0 +1,25 @@
+{
+  "apps" : [{
+    "name"        : "comAdmin",
+    "script"      : "./bin/www",
+    "cwd"         : "./",
+    "watch": [
+      "./bin",
+      "./conf",
+      "./public",
+      "./routers",
+      "./util",
+      "./views"
+    ],
+    "ignore_watch" : [
+      "./node_modules"
+    ],
+    "watch_options": {
+      "followSymlinks": false
+    },
+    "env": {
+      "NODE_ENV": "dev"
+    }
+  }]
+}
+

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>云端集市</title>
+    <!-- 设置编码 -->
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="textml" charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8">
+    <meta http-equiv="Content-Type" content="IE=Edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="keywords" content="藏羌彝文化集市"/>
+    <meta name="description" content="藏羌彝文化集市"/>
+    <meta name="copyright" content="Copyright (c) 大榕树 2017"/>
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <!-- CSS lib -->
+    <link rel="stylesheet" href="user/src/css/layui.css">
+    <link href="user/css/common.css" type="text/css" rel="stylesheet"/>
+    <link href="user/css/mall.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="app">
+    <a href="/" target="_blank" class="back-index">
+        <i class="layui-icon">&#xe68e;</i><br>
+        <span>回到首页</span>
+    </a>
+    <div class="common-header-wrap">
+    <div class="common-header-con clearfix">
+      <a href="/" class="logo lf">藏羌彝文化产业走廊综合门户网站</a>
+      <div class="common-header-rt rt">
+        <a href="">汉语</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">藏语</a>
+      </div>
+    </div>
+  </div>
+    <div class="app-wrapper">
+        <div class="top">
+            <div class="layui-carousel" id="banner">
+                <div carousel-item="" class="carousel-item"></div>
+            </div>
+        </div>
+        <div class="page">
+            <div class="search-bar">
+                <div class="search-wrapper">
+                    <form action="javascript:;" method="GET">
+                        <input  class="input-text" type="text" name="q" autocomplete="off" placeholder="请输入商品名称">
+                        <button class="btn btn-submit">搜一下</button>
+                    </form>
+                </div>
+            </div>
+            <div class="goods">
+                <div class="filter">
+                    <div class="filter-wrapper">
+                        <div class="filter-item" style="border:none;">
+                            <label>属地：</label>
+                            <ul>
+                                <li class="selected">全部</li>
+                                <li data-id='1'>四川</li>
+                                <li data-id='2'>云南</li>
+                                <li data-id='3'>贵州</li>
+                                <li data-id='4'>青海</li>
+                                <li data-id='5'>西藏自治区</li>
+                                <li data-id='6'>甘肃</li>
+                                <li data-id='7'>陕西</li>
+                            </ul>
+                        </div>
+                        <div class="filter-item">
+                            <label>民族：</label>
+                            <ul>
+                                <li class="selected">全部</li>
+                                <li>藏族</li>
+                                <li>羌族</li>
+                                <li>彝族</li>
+                            </ul>
+                        </div>
+                        <div class="filter-item">
+                            <label>排序：</label>
+                            <ul>
+                                <li class="selected">默认</li>
+                                <li>价格 <em class="fs-up">
+                                        <i class="arrow-top"></i>
+                                        <i class="arrow-bottom"></i>
+                                    </em>
+                                </li>
+                                <li>时间<em class="fs-up">
+                                    <i class="arrow-top"></i>
+                                    <i class="arrow-bottom"></i>
+                                </em></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="goods-wrapper">
+                    <blockquote class="bar-title text"> 商品列表 </blockquote>
+                    <div class="mall-desc">
+                        <h1>图书商品</h1>
+                        <p>书籍是人类进步的阶梯</p>
+                    </div>
+                    <div class="goods-list clearfix"></div>
+                    <div class="pagination hide" id="pagination"></div>
+                    <div class="no-data hide">暂无相关商品</div>
+                </div>
+            </div>
+        </div>
+        {% include "./public/_footer.html" %}
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    var count  = 0;//商品列表总数
+    var objData = {};
+    ajaxRequest('/adList','GET',{aid:4},bannerBack);
+    ajaxRequest('/mallList','GET',objData,callback);
+    layui.use(['carousel','laypage'], function () {
+        var carousel = layui.carousel;
+        var laypage  = layui.laypage;
+        //图片轮播
+        carousel.render({
+            elem: '#banner'
+            ,width: '1000px'
+            ,height: '251px'
+            , interval: 2000
+        });
+        // 分页器
+        laypage.render({
+            elem: 'pagination'
+            ,count: count
+            ,theme: '#1E9FFF'
+            ,pages: count/12
+            ,curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
+              var page = location.search.match(/page=(\d+)/);
+              return page ? page[1] : 1;
+            }()
+            ,jump: function(obj, first) {
+                if(!first){
+                  objData.current_page = obj.curr;
+                  ajaxRequest('/mallList','GET',objData,callback);
+                  return;
+                }
+            }
+        });
+    });
+    // 搜索关键词
+    $('.search-wrapper button').click(function(){
+        var textVal = $('.search-wrapper .input-text').val();
+        objData.keyword = textVal;
+        ajaxRequest('/mallList','GET',{'keyword':textVal},callback);
+        $('body .filter-wrapper .filter-item').each(function(){
+            $(this).find('ul li').eq(0).addClass('selected').siblings().removeClass('selected');
+        });
+    });
+    //筛选
+    $('body .filter-wrapper .filter-item').each(function(){
+        var index = $(this).index();
+        if (index == 0) {
+            itemClik ($(this),'role_id');
+        }
+        if (index == 1) {
+            itemClik ($(this),'nation');
+        }
+        if (index == 2) {
+            $(this).find('ul li').click(function(){
+                var fsup = $(this).find('.fs-up');
+                var index1 = $(this).index();
+                $(this).addClass('selected').siblings().removeClass('selected');
+                if (index1 == 0) {
+                    delete objData['order_new'];
+                    delete objData['order_price'];
+                }else if (index1 == 1) {
+                    if (fsup.hasClass('top')){
+                        fsup.addClass('bottom').removeClass('top');
+                        objData.order_price = 1;
+                    }else{
+                        fsup.addClass('top').removeClass('bottom');
+                        objData.order_price = 2;
+                    }
+                    delete objData['order_new'];
+                } else if (index1 == 2) {
+                    if (fsup.hasClass('top')){
+                        fsup.addClass('bottom').removeClass('top');
+                        objData.order_new = 2;
+                    }else{
+                        fsup.addClass('top').removeClass('bottom');
+                        objData.order_new = 1;
+                    }
+                    delete objData['order_price'];
+                }
+                ajaxRequest('/mallList','GET',objData,callback);
+            });
+        }
+    });
+
+    function itemClik (node,key) {
+        node.find('ul li').click(function(){
+            var index1 = $(this).index();
+            $(this).addClass('selected').siblings().removeClass('selected');
+            objData[key] = index1;
+            if (index1 == 0) {
+                delete objData[key];
+            }
+            ajaxRequest('/mallList','GET',objData,callback);
+        });
+    }
+    //商品banner
+    function bannerBack (json) {
+        var _html = '';
+        var arrBanner = json.ad_body;
+        for (var i = 0; i < arrBanner.length; i++) {
+            _html += '<div><a href="'+arrBanner[i].link+'" title="'+arrBanner[i].link+'"><img src="'+arrBanner[i].img+'"></a></div>'
+        }
+        $('.carousel-item').html(_html);
+    }
+    //商品列表
+    function callback(json){
+        var _html = '';
+        count = json.total_num;
+        if (count>0) {
+            $('.no-data').addClass('hide');
+            $('.pagination').removeClass('hide');
+        }else{
+            $('.no-data').removeClass('hide');
+            $('.pagination').addClass('hide');
+        }
+        var arrList = json.list;
+        for (var i = 0; i < arrList.length; i++) {
+            _html += '<a class="goods-item" href="/purchase-page?goods_id='+arrList[i].goods_id+'"><div class="goods-img"><img src="'+arrList[i].goods_thumb+'" title="'+arrList[i].goods_title+'" alt="商品图片"/></div><div class="goods-info"><div class="goods-title">'+arrList[i].goods_title+'</div><div class="goods-price">&yen;&nbsp;'+arrList[i].goods_sale_price+'</div></div></a>';
+        }
+        $('.goods-list').html(_html);
+    }
+
+      function ajaxRequest(url,type,data,callback){
+        $.ajax({
+            url:url,
+            type: type,
+            data:data,
+            success:callback
+        });
+      }
+
+</script>
+</html>

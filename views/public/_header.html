@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- 设置编码 -->
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="textml" charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8">
+    <meta http-equiv="Content-Type" content="IE=Edge"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <meta name="keywords" content="藏羌彝文化集市"/>
+    <meta name="description" content="藏羌彝文化集市"/>
+    <meta name="copyright" content="Copyright (c) 大榕树 2017"/>
+    <title>{{title}}</title>
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <!-- CSS lib -->
+    <link rel="stylesheet" href="user/src/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="user/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="user/css/main.css" />
+</head>
+<body class="mz-body">
+  <!-- 公用头部 -->
+  <div class="common-header-wrap">
+    <div class="common-header-con clearfix">
+      <a href="/" class="logo lf">藏羌彝文化产业走廊综合门户网站</a>
+      <div class="common-header-rt rt">
+        <a href="">汉语</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">藏语</a>
+      </div>
+    </div>
+  </div>
+  <!-- banner -->
+  <div class="index-banner" style="width:1000px;margin:auto; height:190px; background: url(user/images/banner4.png) repeat-x;">
+     <div class="index-banner-con" style="display:none;">
+      <div id="YSlide"> flash中的图片轮换开始
+       <p class="YSample" style="display: none;"><img src="user/images/index_a1.jpg" width="992" height="198" style="opacity: 1;"></p>
+       <p class="YSample" style="display: block;"><img src="user/images/index_a2.jpg" width="992" height="198" style="opacity: 1;">&lt;</p>
+       <p class="YSample" style="display: none;"><img src="user/images/index_a3.jpg" width="992" height="198" style="opacity: 1;"></p>
+       <p class="YSample"><img src="user/images/index_a4.jpg" width="992" height="198"></p>
+       <p id="YSIndex"><a href="#1" class=" ">1</a><a href="#1" class="  current">2</a><a href="#1" class=" ">3</a></p>
+      </div>
+      <div class="zqy-text-wrap">
+        <img src="user/images/logo-word.png">
+      </div>
+    </div>
+  </div>
+  <div class="index-main-nav">
+    <a href="/" class="{{currentPage==1||currentPage==15?'active':''}}">网站首页</a>
+    <div class="nav-any-link {{currentPage==13||currentPage==16?'active':''}}">权威发布
+      <div class="nav-any-con">
+        <a href="/list-page?parentval=权威发布&erval=政策法规&attr_id=16&role_id=all">政策法规</a>
+        <a href="/list-page?parentval=权威发布&erval=学术前沿&attr_id=13&role_id=all">学术前沿</a>
+      </div>
+    </div>
+    <div class="nav-any-link {{currentPage==17||currentPage==18||currentPage==3?'active':''}}">产业动态
+      <div class="nav-any-con">
+        <a href="/list-page?parentval=产业动态&erval=地方资讯&attr_id=17&role_id=all">地方资讯</a>
+        <!-- <a href="/list-page?parentval=产业动态&erval=园区发展&attr_id=18&role_id=all">园区发展</a> -->
+        <a href="/project-library">项目库</a>
+      </div>
+    </div>
+    <a href="/mall" class="{{currentPage==4?'active':''}}" target="_blank">特色产品</a>
+    <a href="/list-page?parentval=首页&erval=线上走廊&attr_id=19&role_id=all" class="{{currentPage==19?'active':''}}">线上走廊</a>
+    <div class="nav-any-link {{currentPage==14?'active':''}}">申报项目
+      <div class="nav-any-con">
+        <a href="/list-page?parentval=项目申报&erval=申报解读&attr_id=14&role_id=all">申报解读</a>
+        <a href="/declare-service">申报服务</a>
+      </div>
+    </div>
+    <a href="/ele-Journals" class="{{currentPage==7?'active':''}}" style="width: 148px;">电子期刊</a>
+  </div>
+  <!-- banner end -->

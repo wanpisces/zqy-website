@@ -1,0 +1,101 @@
+{% include "./public/_header.html"  with {title:title,currentPage:attr_id}%}
+  <!-- 公用头部end -->
+  <div class="index-main-wrap">
+    <div class="loc-link-wrap">
+      {% for item in aVal %}
+        <a href="">{{item}}</a>&gt;
+      {% endfor %}
+    </div>
+    <div class="clearfix">
+      <div class="zxfg-main-wrap lf">
+        <div class="zxfg-main-province">
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=all"  class="{{role_id=='all'?'on':''}}">全部</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=1" class="{{role_id==1?'on':''}}">四川</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=2" class="{{role_id==2?'on':''}}">云南</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=3" class="{{role_id==3?'on':''}}">贵州</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=4" class="{{role_id==4?'on':''}}">青海</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=5" class="{{role_id==5?'on':''}}">西藏</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=6" class="{{role_id==6?'on':''}}">陕西</a>
+          <a href="/list-page?parentval={{aVal[0]}}&erval={{aVal[1]}}&attr_id={{attr_id}}&role_id=7" class="{{role_id==7?'on':''}}">甘肃</a>
+        </div>
+        <div class="history-date">
+          <h2 class="first" style="position: relative;">
+              <a href="#">{{title}}</a>
+          </h2>
+          <ul class="layui-timeline">
+            {% for item in news.list %}
+            <li class="layui-timeline-item">
+              <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+              <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">{{item.create_time}}</h3>
+                <p>
+                  <a href="/article-details?news_id={{item.news_id}}" class="date-tit">{{item.news_title}}</a>
+                  <p>{{item.news_desc}}</p>
+                  <div class="origin">来源：<span>{{item.news_resource}}</span>&nbsp;&nbsp;阅读量：<span>{{item.hits}}</span></div>
+                </p>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+          {% if news.list.length > 0 %}
+           <div class="pagination" id="pagination1"></div>
+          {% else %}
+          <div class="no-data">暂无数据</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="zxfg-section-wrap rt" id="tab-switch4">
+          <h2 class="remne-tit">热门文章</h2>
+          <div class="remen-bd-wrap"><a href="javascript:;" class="rank-a on">日榜</a>&nbsp;&nbsp;<a href="javascript:;" class="rank-a">周榜</a></div>
+          <div class="rank-wrap">
+            <ol>
+              {% for item in rank_day.list %}
+              <li><a href="/article-details?news_id={{item.news_id}}" title="{{item.news_title}}">{{item.news_title}}</a></li>
+              {% endfor %}
+            </ol>
+            <ol>
+              {% for item in rank_week.list %}
+              <li><a href="/article-details?news_id={{item.news_id}}" title="{{item.news_title}}">{{item.news_title}}</a></li>
+              {% endfor %}
+            </ol>
+          </div>
+      </div>
+    </div>
+  </div>
+{% include "./public/_footer.html" %}
+
+<script type="text/javascript">
+  var objData = {};
+  // 分页
+  layui.use(['laypage'], function () {
+      var laypage  = layui.laypage;
+      laypage.render({
+          elem: 'pagination1'
+          ,count: '{{total_num}}'||0
+          ,theme: '#f16317'
+          ,pages: {{total_num/20}}
+          ,curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
+              var page = location.search.match(/page=(\d+)/);
+              return page ? page[1] : 1;
+          }()
+          ,jump: function (obj, first) {
+            if(!first){
+              var current_page = obj.curr;
+              window.location.href = '/policies-page?attr_id=16&current_page='+current_page;
+              return;
+            }
+          }
+       });
+  });
+
+
+
+  function ajaxRequest(url,type,data,callback){
+    $.ajax({
+        url:url,
+        type: type,
+        data:data,
+        success:callback
+    });
+  }
+</script>

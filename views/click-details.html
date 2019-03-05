@@ -1,0 +1,181 @@
+{% include "./public/_header.html"  with {title:'订单页详情'}%}
+  <div class="index-main-wrap">
+    <div class="buy-page-wrap">
+      <div class="loc-link-wrap"><a href="">我的订单</a></div>
+      <div class="dingdan-wrap">
+        <div class="dingdan-title"><span class="dd-span1"><input type="checkbox" name="">全选</span><span class="dd-span2">商品名称</span><span class="dd-span3">单价</span><span class="dd-span4">数量</span><span class="dd-span5">优惠</span><span class="dd-span6">小计</span>
+          <!-- <span class="dd-span7">操作</span> -->
+        </div>
+        <ul class="dd-ul-wrap">
+          <li>
+            <span class="li-span1"><input type="checkbox" name=""></span><span class="li-span2">励志书籍：格局决定气度</span><span class="li-span3">¥19.50</span><span class="li-span4"><input type="button" name="" value="-" class="del-btn"><input type="text" name="" value="1" class="goods-input-text"><input type="button" name="" value="+" class="add-btn"></span><span class="li-span5">0</span><span class="li-span6">￥19.00</span>
+            <!-- <a class="li-span7" href="javascript:;">删除</a> -->
+          </li>
+        </ul>
+      </div>
+      <div class="jiesuan-wrap clearfix">
+        <table class="lf">
+          <tr>
+            <th>购买人信息</th>
+            <th>联系电话</th>
+            <th>收货地址</th>
+          </tr>
+          <tr>
+            <td class="nameTd">何XXX</td>
+            <td class="phonenumberTd">12313245235</td>
+            <td class="addressTd">xxxxxxx</td>
+          </tr>
+        </table>
+        <div class="lf edit-address">修改地址</div>
+        <a href="javascript:;" class="jiesuan-btn">去结算</a>
+      </div>
+    </div>
+  </div>
+  <div id="purchase-box" class="purchase-box">
+    <style type="text/css">.layui-layer-title{display: none;}</style>
+    <h2 class="order-title">请填写订单信息</h2>
+    <form class="layui-form" name="submitForm" action="javascript:;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">您的姓名：</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required name="name"  lay-verify="required" placeholder="您的姓名" autocomplete="off" class="layui-input input1">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">联系方式：</label>
+        <div class="layui-input-block">
+          <input  name="title" required  lay-verify="required|phonenumber" name="phonenumber" placeholder="电话号码" autocomplete="off" class="layui-input input2">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">收货地址：</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" name="location" placeholder="收货地址" autocomplete="off" class="layui-input input3">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="purchase-pop-btn layui-input-block">
+          <button class="cancel-btn">取消</button>
+          <button class="save-btn" lay-submit  lay-filter="*" type="submit">保存</button>
+        </div>
+      </div>
+    </form>
+  </div>
+ {% include "./public/_footer.html" %}
+ <script type="text/javascript" src="lib/layer/2.1/layer.js"></script>
+ <script type="text/javascript">
+  var strData = localStorage.getItem('localStorageData');
+  var objData = JSON.parse(strData);
+  var goodsPrice = 0;
+  objData.goods_id = {{goods_id}}||'';
+  objData.pay_type = 1;
+  var pucharseBox = null;
+  ajaxRequest('/purchaseJson','GET',{'goods_id':objData.goods_id},callbackFn);//获取商品详情
+   $('.edit-address').click(function(){
+    pucharseBox = layer.open({
+      type: 1,
+      content: $('#purchase-box')
+    });
+  });
+   //删除订单
+   $('.li-span7').click(function(){
+    $(this).parents('li').remove();
+   });
+  $('.nameTd').html(objData.link_name);
+  $('.phonenumberTd').html(objData.link_tel);
+  $('.addressTd').html(objData.link_address);
+  //结算默认微信支付
+  $('.jiesuan-btn').click(function(){
+    objData.goods_num = $('.goods-input-text').val();
+    if (isNaN(objData.goods_num)) {
+      objData.goods_num = 1;
+      $('.goods-input-text').val('1');
+    }
+    ajaxRequest('/pay','POST',objData,callback);
+    function callback(json) {
+      layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        shadeClose: true,
+        skin: 'yourclass',
+        content: '<div class="pay-box"><h1>微信支付</h1><img src="'+json+'"/><a href="javascript:;">选择支付宝支付</a></div>'
+      });
+    }
+  });
+  //支付宝支付
+  $('body').on('click','.pay-box a',function(){
+    objData.pay_type = 2;
+    ajaxRequest('/pay','POST',objData,callback);
+    function callback(json) {
+      window.location.href = json;
+    }
+  });
+
+  $('.cancel-btn').click(function(){
+    layer.close(pucharseBox);
+  })
+  $(".add-btn").click(function(){
+    var n=$(this).prev().val();
+    var num=parseInt(n)+1;
+    if(num==0){ return;}
+    $(this).prev().val(num);
+    $(this).parents('li').children('.li-span6').html('￥'+(num*goodsPrice).toFixed(2));
+    });
+    //减的效果
+  $(".del-btn").click(function(){
+    var n=$(this).next().val();
+    var num=parseInt(n)-1;
+    if(num==0){ return}
+    $(this).next().val(num);
+    $(this).parents('li').children('.li-span6').html('￥'+(num*goodsPrice).toFixed(2));
+  });
+
+  layui.use('form', function(){
+    var form = layui.form;
+    //验证手机号码
+    form.verify({
+        phonenumber: function(value){
+          if(isNaN(value)){
+            return '请输入数字';
+          } else if(!(/^1[34578]\d{9}$/.test(value))){
+            return '请输入正确的手机号码';
+          }
+        }
+        ,required: function(value){
+          if(value == ''){
+            return '必填项不能为空';
+          }
+        }
+      });
+      //监听提交
+      form.on('submit(*)', function(data){
+        objData.link_name = $('.input1').val();
+        objData.link_tel = $('.input2').val();
+        objData.link_address = $('.input3').val();
+        localStorage.setItem('localStorageData', JSON.stringify(objData));
+        $('.nameTd').html(objData.link_name);
+        $('.phonenumberTd').html(objData.link_tel);
+        $('.addressTd').html(objData.link_address);
+        layer.close(pucharseBox);
+        return false;
+      });
+    });
+
+  function callbackFn (json) {
+    goodsPrice = json.goods_sale_price;
+    $('.li-span2').html(json.goods_title);
+    $('.li-span3').html('￥'+json.goods_sale_price);
+    $('.goods-input-text').val({{goods_num}}||'0');
+    $('.li-span5').html('0');
+    $('.li-span6').html('￥'+({{goods_num}}*json.goods_sale_price).toFixed(2));
+  }
+  function ajaxRequest(url,type,data,callback){
+    $.ajax({
+        url:url,
+        type: type,
+        data:data,
+        success:callback
+    });
+  }
+ </script>

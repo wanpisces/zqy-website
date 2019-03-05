@@ -1,0 +1,20 @@
+{% include "./public/_header.html"  with {title:'电子期刊',currentPage:7}%}
+  <!-- 公用头部end -->
+  <div class="index-main-wrap">
+    <div class="xiangmu-wrap">
+      <h1 class="xiangmu-title">期刊列表</h1>
+      {% for item in list %}
+      <div class="dianzi-wrap clearfix">
+        <div class="dianzi-con lf">
+          <h1>{{item.eper_title}}</h1>
+          <p>{{item.eper_desc}}</p>
+        </div>
+        <div class="dianzi-link rt">
+          <a href="" style="margin-bottom: 60px;">在线预览</a>
+          <a href="{{item.eper_url}}">PDF下载</a>
+        </div>
+      </div>
+      {% endfor  %}
+    </div>
+  </div>
+ {% include "./public/_footer.html" %}

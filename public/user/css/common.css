@@ -1,0 +1,69 @@
+@charset "UTF-8";
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { margin: 0; padding: 0; }
+ul,ol{list-style:none;}
+a{text-decoration:none;}
+img{border:0;vertical-align:middle;}
+input,button{vertical-align:middle;outline:none;border:none;}
+textarea{outline:none;border:none;resize:none;}
+input, textarea {box-sizing: content-box;outline: none;background: 0 0;}
+.rt{float:right;}
+.lf{float: left;}
+a,body{color: #000;}
+body{min-width: 1300px;}
+/*清除浮动*/
+.clearfix{*zoom:1;} /* 针对IE7 hack，触发IE7的haslayout，以清除浮动 */
+.clearfix:before,.clearfix:after{display:table;content:"";line-height:0;}
+.clearfix:after{clear:both;}
+table tr td,table{border-collapse:collapse;}
+/*解决 a标签点击出现色块*/
+a:active{
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    -moz-tap-highlight-color:rgba(0, 0, 0, 0);
+    -ms-tap-highlight-color:rgba(0, 0, 0, 0);
+    -o-tap-highlight-color:rgba(0, 0, 0, 0);
+    tap-highlight-color:rgba(0, 0, 0, 0);
+}
+a{text-decoration:none}
+
+
+/*公用头部*/
+.logo{display: block;height: 40px;;line-height: 40px;color: #fff;font-size: 12px;}
+.logo:hover{color: #fff;text-decoration: underline;}
+.common-header-wrap{width: 100%;height: 40px;background: #012a51;}
+.common-header-con{margin:auto;width: 1000px;height: 100%;}
+.common-header-rt{line-height: 40px;font-size: 10px;font-weight: bold;color: #fff;}
+.common-header-rt a{color: #fff;font-size: 12px;font-weight: normal;}
+.common-header-rt a:hover{color: #ff0000;}
+
+
+/*title*/
+.common-title{border-left: 4px solid #003466;box-sizing: border-box;width: 100%;height: 40px;background: #efefef; left center no-repeat;background-size: 100% 100%;font-size: 16px; text-align: right;}
+.common-title .lf{margin-left: 15px;height: 40px;line-height: 40px;}
+.common-title .more{display: inline-block;width: 60px;height: 40px;line-height: 40px;text-align: center;font-size: 12px;}
+.common-title .more:hover{color: #ff0000;}
+
+/*列表*/
+.option-con{margin-top: 20px;width: 100%;}
+.option-con li{text-align: right;height: 30px;line-height: 30px;}
+.option-con li a{display: block;float: left;width: 400px;height: 30px;line-height: 30px;overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align: left;}
+.option-con li a:hover,.option-con li a:hover span{color: #ff0000;}
+.option-con>span{margin-right:15px;}
+.option-con li a span{margin-right:5px;color: #434343;font-weight: 800;}
+.section-zr-item ul{display: none;}
+
+.no-data{text-align:center;margin:20px auto 40px;}
+.no-data.hide,.pagination.hide{display: none;}
+
+
+/*底部*/
+.zqy-footer{margin-top: 50px;padding: 15px 0;height: 95px;background: #000;}
+.zqy-footer p{font-size: 12px;color: #fff;line-height: 40px;text-align: center;}
+.zqy-footer p a{font-size: 12px;color: #fff;}
+.zqy-footer p a:hover{text-decoration: underline;}
+
+
+
+
+
+
+

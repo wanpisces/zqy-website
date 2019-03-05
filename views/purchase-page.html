@@ -1,0 +1,150 @@
+{% include "./public/_header.html"   with {title:'购买页',currentPage:4}%}
+  <div class="index-main-wrap">
+    <div class="buy-page-wrap">
+      <div class="loc-link-wrap"><a href="">特色产品</a>&gt;<a href="">购买</a></div>
+      <div class="buy-page-con clearfix">
+        <div class="buy-page-lf lf">
+          <div class="buy-big-wrap">
+            <ul>
+              {% for item in goods_pics %}
+                <li><img src="{{item}}"></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="buy-small-wrap">
+             <ul>
+              {% for item in goods_pics %}
+                <li><img src="{{item}}"></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="buy-page-rt rt">
+          <h1>{{goods_title}}</h1>
+          <small>{{goods_desc}}</small>
+          <div class='goods-pannel'>
+            <table>
+              <tr>
+                <td class="goods-td1">价格</td>
+                <td>￥{{goods_price}}</td>
+              </tr>
+              <tr>
+                <td class="goods-td1">促销价</td>
+                <td>￥<span class="redColor">{{goods_sale_price}}</span></td>
+              </tr>
+              <tr>
+                <td class="goods-td1">服务</td>
+                <td>{{tags}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="goods-num-wrap">
+            <span>数量</span>
+            <div class="goods-num-inpt"><input type="button" name="" value="-" class="del-btn"><input type="text" name="" value="1" class="goods-input-text"><input type="button" name="" value="+" class="add-btn"></div>
+          </div>
+          <div class="pucharse-btn" id="pucharse-btn">立即购买<input type="hidden" name="" value="{{goods_id}}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="purchase-box" class="purchase-box">
+    <style type="text/css">.layui-layer-title{display: none;}</style>
+    <h2 class="order-title">请填写订单信息</h2>
+    <form class="layui-form" name="submitForm" action="javascript:;">
+      <div class="layui-form-item">
+        <label class="layui-form-label">您的姓名：</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required name="name"  lay-verify="required" placeholder="您的姓名" autocomplete="off" class="layui-input input1">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">联系方式：</label>
+        <div class="layui-input-block">
+          <input  name="title" required  lay-verify="required|phonenumber" name="phonenumber" placeholder="电话号码" autocomplete="off" class="layui-input input2">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">收货地址：</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" name="location" placeholder="收货地址" autocomplete="off" class="layui-input input3">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="purchase-pop-btn layui-input-block">
+          <button class="cancel-btn">取消</button>
+          <button class="save-btn" lay-submit  lay-filter="*" type="submit">保存</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% include "./public/_footer.html" %}
+<script type="text/javascript">
+  //购买信息弹框
+  var pucharseBox = null;
+  var goods_num = 0;
+  var goods_id = 0;
+  var localStorageData = {}
+  var objLocalStorage = localStorage.getItem('localStorageData');
+
+  $(".add-btn").click(function(){
+    var n=$(this).prev().val();
+    var num=parseInt(n)+1;
+    if(num==0){ return;}
+    $(this).prev().val(num);
+    });
+    //减的效果
+  $(".del-btn").click(function(){
+    var n=$(this).next().val();
+    var num=parseInt(n)-1;
+    if(num==0){ return}
+    $(this).next().val(num);
+  });
+
+
+  $('#pucharse-btn').click(function(){
+    goods_num = $('.goods-input-text').val();
+    if (isNaN(goods_num)) {
+      goods_num = 1;
+      $('.goods-input-text').val('1');
+    }
+    goods_id = $(this).find('input').val();
+    if (!objLocalStorage) {
+      pucharseBox = layer.open({
+        type: 1,
+        content: $('#purchase-box')
+      });
+    }else {
+      window.location.href = '/click-details?goods_num='+goods_num+'&goods_id='+goods_id;
+    }
+  })
+  $('.cancel-btn').click(function(){
+      layer.close(pucharseBox);
+  })
+  layui.use('form', function(){
+    var form = layui.form;
+    //验证手机号码
+    form.verify({
+        phonenumber: function(value){
+          if(isNaN(value)){
+            return '请输入数字';
+          } else if(!(/^1[34578]\d{9}$/.test(value))){
+            return '请输入正确的手机号码';
+          }
+        }
+        ,required: function(value){
+          if(value == ''){
+            return '必填项不能为空';
+          }
+        }
+      });
+      //监听提交
+      form.on('submit(*)', function(data){
+        localStorageData.link_name = $('.input1').val();
+        localStorageData.link_tel = $('.input2').val();
+        localStorageData.link_address = $('.input3').val();
+        localStorage.setItem('localStorageData', JSON.stringify(localStorageData));
+        window.location.href = '/click-details?goods_num='+goods_num+'&goods_id='+goods_id;
+        return false;
+      });
+    });
+</script>
